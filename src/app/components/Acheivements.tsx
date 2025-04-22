@@ -39,7 +39,7 @@ const VideoSection = () => {
     setIsAutoplayEnabled(true);
     setIsVideoPlaying(false);
     if (swiperRef.current) {
-      swiperRef.current.enable(); // FIX: Do not call start() to prevent instant slide movement
+      swiperRef.current.enable();
     }
   };
 
@@ -64,8 +64,14 @@ const VideoSection = () => {
         <h2 className="text-[34px] md:text-5xl font-bold mb-10 md:mb-18 text-[#c4cfde]">
           <span className="text-[#c4cfde]">Other Achievements</span>
         </h2>
+
+        {/* Display playing status */}
+        {isVideoPlaying && (
+          <p className="text-green-400 font-medium mb-6">🎥 A video is currently playing</p>
+        )}
+
         <Swiper
-          onSwiper={(swiper) => (swiperRef.current = swiper)} // Store Swiper instance
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
           spaceBetween={20}
           slidesPerView={1}
           breakpoints={{
