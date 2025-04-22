@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState, useRef, Suspense, useEffect, useLayoutEffect } from "react";
+import React, { useState, useRef, Suspense, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial } from "@react-three/drei";
 import { inSphere } from "maath/random";
 import * as THREE from "three";
 
-const StarBackground = (props: any) => {
+const StarBackground = (props: JSX.IntrinsicElements["group"]) => {
   const ref = useRef<THREE.Group | null>(null);
-  const [sphere] = useState(() => inSphere(new Float32Array(4500), { radius: 1.2 }));
+  const [sphere] = useState(() =>
+    inSphere(new Float32Array(4500), { radius: 1.2 })
+  );
 
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.x -= delta / 10;
       ref.current.rotation.y -= delta / 15;
@@ -36,14 +38,10 @@ const StarCanvas = () => {
   const [isBrowser, setIsBrowser] = useState(false);
 
   useEffect(() => {
-    // Make sure the code runs only in the browser
     setIsBrowser(true);
   }, []);
 
-  // Render the canvas only if it's in the browser environment
-  if (!isBrowser) {
-    return null;
-  }
+  if (!isBrowser) return null;
 
   return (
     <div
